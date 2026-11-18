@@ -11,7 +11,7 @@ Ticks are saved only in your own browser. Nothing is sent anywhere.
 ## Files
 
 - `index.html`: the whole page, with styles and script inline and no build step
-- `icon.svg`, `apple-touch-icon.png`: site icons
+- `favicon.ico`, `icon.svg`, `icon-192.png`, `apple-touch-icon.png`: site icons, all full-bleed squares (phones and link previews round them themselves)
 - `og.png`: link-preview image for WhatsApp and other apps
 - `_headers`: security headers applied by Cloudflare Pages
 
