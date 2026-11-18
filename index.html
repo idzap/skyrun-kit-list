@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unofficial SkyRun Kit List</title>
+<meta name="format-detection" content="telephone=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: phone-first. A sticky bar holds the race picker and progress; below it the grouped tick-list for the chosen race, then optional lists and official links. Colours follow the event guide: deep teal ground, orange headings, one colour per race. */
+:root {
+  --bg: #eef3f5; --surface: #ffffff; --ink: #142a33; --muted: #50656e; --line: #d3dee3;
+  --head: #142a33; --head-ink: #ffffff; --head-muted: #a9bcc4;
+  --orange: #c4620f; --orange-soft: #fbeadb; --sky: #1588b8;
+  --done: #e3f1f8;
+  --race-T: #3b656a; --race-C: #296a94; --race-B: #6a4c93; --race-U: #1f8fc4; --race-E: #b8703f; --race-G: #b5525a;
+  --font: "Montserrat", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1d24; --surface: #142a33; --ink: #e8f0f3; --muted: #9fb3bb; --line: #24414d;
+    --head: #0a171d; --head-ink: #ffffff; --head-muted: #8ea6b0;
+    --orange: #f0953f; --orange-soft: #3a2614; --sky: #4cc0ec; --done: #173a49;
+    --race-T: #5f9aa0; --race-C: #4a97c9; --race-B: #9a7cc4; --race-U: #45b3e6; --race-E: #d99466; --race-G: #db7a82;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1d24; --surface: #142a33; --ink: #e8f0f3; --muted: #9fb3bb; --line: #24414d;
+  --head: #0a171d; --head-ink: #ffffff; --head-muted: #8ea6b0;
+  --orange: #f0953f; --orange-soft: #3a2614; --sky: #4cc0ec; --done: #173a49;
+  --race-T: #5f9aa0; --race-C: #4a97c9; --race-B: #9a7cc4; --race-U: #45b3e6; --race-E: #d99466; --race-G: #db7a82;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 500 15px/1.5 var(--font); margin: 0; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--head); }
+.inner { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { margin: 0; text-wrap: balance; }
+
+/* header band */
+.top { background: var(--head); color: var(--head-ink); }
+.top .inner { padding-block: 22px 14px; display: grid; gap: 6px; }
+.eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--head-muted); }
+h1 { font-size: 1.9rem; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
+h1 span { color: #f0953f; }
+.top p { margin: 0; color: var(--head-muted); font-size: .9rem; }
+
+/* sticky picker */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--head); border-bottom: 3px solid var(--rc, var(--sky)); }
+.bar .inner { padding-block: 10px 12px; display: grid; gap: 10px; }
+.races { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; padding: 0 4px; }
+.races::-webkit-scrollbar { display: none; }
+.race { flex: none; border: 1.5px solid rgba(255,255,255,.22); background: transparent; color: #ffffff; border-radius: 8px; padding: 6px 10px; font: 700 .85rem/1.15 var(--font); cursor: pointer; text-align: left; }
+.race small { display: block; font-weight: 500; font-size: .72rem; opacity: .75; }
+.race[aria-pressed="true"] { background: var(--c); border-color: var(--c); }
+.race:focus-visible, .btn:focus-visible, .item input:focus-visible { outline: 3px solid #f0953f; outline-offset: 2px; }
+.prog { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px; color: #ffffff; }
+.prog .count { font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prog .start { color: var(--head-muted); font-size: .75rem; white-space: nowrap; }
+.meter { flex-basis: 100%; }
+@media (max-width: 480px) {
+  .bar .inner { padding-block: 8px 9px; gap: 7px; }
+  .race { padding: 5px 9px; font-size: .8rem; }
+  .race small { font-size: .68rem; }
+}
+.meter { grid-column: 1 / -1; height: 6px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: hidden; }
+.meter span { display: block; height: 100%; width: 0; background: var(--rc, var(--sky)); transition: width .25s; }
+@media (prefers-reduced-motion: reduce) { .meter span { transition: none; } }
+
+/* body */
+main .inner { padding-block: 20px 48px; display: grid; gap: 24px; }
+.notice { background: var(--orange-soft); border-radius: 10px; padding: 12px 14px; font-size: .88rem; display: grid; gap: 4px; }
+.notice b { color: var(--orange); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 7px 12px; font: 700 .82rem var(--font); cursor: pointer; }
+.btn.danger { border-color: var(--orange); color: var(--orange); }
+#list { display: grid; gap: 22px; }
+section { display: grid; gap: 8px; }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+h2 { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--orange); }
+.sec-count { color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+.note-sec { color: var(--muted); font-size: .85rem; margin: 0; }
+ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.item { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; cursor: pointer; }
+.item input { width: 22px; height: 22px; margin: 0; accent-color: var(--rc, var(--sky)); flex: none; cursor: pointer; }
+.item .txt { display: grid; gap: 3px; min-width: 0; }
+.item .name { font-weight: 700; }
+.item .det { color: var(--muted); font-size: .85rem; }
+.item .diff { color: var(--orange); font-size: .8rem; font-weight: 600; }
+.item.done { background: var(--done); border-color: transparent; }
+.item.done .name { text-decoration: line-through; text-decoration-color: var(--muted); }
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.link { display: grid; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; text-decoration: none; color: var(--ink); }
+.link b { color: var(--sky); }
+.link span { color: var(--muted); font-size: .8rem; }
+.contacts { display: grid; gap: 0; font-size: .9rem; }
+.contacts > div { display: grid; gap: 4px; border-bottom: 1px solid var(--line); padding: 10px 0; }
+.contacts > div > span:first-child { font-weight: 600; }
+.contacts b { font-variant-numeric: tabular-nums; user-select: all; font-size: 1.05rem; }
+.contacts a, .contacts b a { color: inherit; text-decoration: none; }
+.num-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.btn.copy { padding: 5px 12px; min-width: 70px; }
+.btn.copy.ok { border-color: var(--sky); color: var(--sky); }
+.muted-s { color: var(--muted); font-size: .78rem; }
+footer { color: var(--muted); font-size: .78rem; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="inner">
+    <div class="eyebrow">SkyRun Zimbabwe 2026 · Unofficial runner's tool</div>
+    <h1>Compulsory kit <span>checklist</span></h1>
+    <p>Pick your race, then tick items off as you pack. Ticks are saved on this phone only.</p>
+  </div>
+</header>
+
+<div class="bar" id="bar">
+  <div class="inner">
+    <div class="races" role="group" aria-label="Choose your race" id="races"></div>
+    <div class="prog">
+      <div class="count" id="count">0 / 0 packed</div>
+      <div class="start" id="start"></div>
+      <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="inner">
+    <div class="notice">
+      <div><b>Unofficial.</b> A runner made this to help with packing. It isn't from SkyRun Zimbabwe. It follows the 2026 Event Guide's kit table. Where the kit list on skyrunzim.com differs, the item says so in orange, and it's safest to pack whichever list asks for more. The race director has the final word at kit inspection.</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="hideDone" type="button">Hide packed items</button>
+      <button class="btn" id="reset" type="button">Untick this race</button>
+      <button class="btn danger" id="resetConfirm" type="button" hidden>Yes, untick all</button>
+    </div>
+
+    <div id="list"></div>
+
+    <section>
+      <div class="sec-head"><h2>Rules that affect your kit</h2></div>
+      <ul>
+        <li class="item" style="cursor:default"><span class="txt"><span class="name">10 minutes per missing item</span><span class="det">Kit is checked at registration (you can't register without passing) and mainly at the finish.</span></span></li>
+        <li class="item" style="cursor:default"><span class="txt"><span class="name">No NSAIDs</span><span class="det">No ibuprofen or other anti-inflammatories in your first aid kit.</span></span></li>
+        <li class="item" style="cursor:default"><span class="txt"><span class="name">Finish with what you started with</span><span class="det">Losing kit on course costs 30 minutes. Littering costs 60.</span></span></li>
+        <li class="item" style="cursor:default"><span class="txt"><span class="name">Kit changes are announced 24 hours before</span><span class="det">The race director may change the list because of weather. Weather reports come out a week before and 48 hours before.</span></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>Official info</h2></div>
+      <div class="links">
+        <a class="link" href="https://www.skyrunzim.com/rules-and-kit" target="_blank" rel="noopener"><b>Race rules &amp; kit list</b><span>skyrunzim.com</span></a>
+        <a class="link" href="https://www.skyrunzim.com/races/tracksandmaps" target="_blank" rel="noopener"><b>2026 GPX tracks &amp; maps</b><span>The route has changed: get these before 28 Nov</span></a>
+        <a class="link" href="https://www.skyrunzim.com/races/firstaidpdf" target="_blank" rel="noopener"><b>First Aid PDF</b><span>Compulsory reading</span></a>
+        <a class="link" href="https://www.skyrunzim.com/races/directions" target="_blank" rel="noopener"><b>Directions</b><span>Leave Harare by 13:00</span></a>
+        <a class="link" href="https://www.skyrunzim.com/races" target="_blank" rel="noopener"><b>Races &amp; profiles</b><span>skyrunzim.com</span></a>
+      </div>
+      <p class="note-sec">The full 2026 Event Guide PDF was sent to entrants by the organisers.</p>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>Emergency numbers</h2></div>
+      <div class="contacts">
+        <div><span>ACE Air &amp; Ambulance <small class="muted-s">· lines 901 to 904</small></span><span class="num-row"><b id="num-ace">+263 782 999 901</b><button class="btn copy" type="button" id="copy-ace" data-num="+263782999901" data-target="num-ace">Copy</button></span></div>
+        <div><span>ACE WhatsApp</span><span class="num-row"><b id="num-acewa">+263 782 999 904</b><button class="btn copy" type="button" id="copy-acewa" data-num="+263782999904" data-target="num-acewa">Copy</button></span></div>
+        <div><span>Jazzy (emergency contact)</span><span class="num-row"><b id="num-jazzy">+263 78 066 1516</b><button class="btn copy" type="button" id="copy-jazzy" data-num="+263780661516" data-target="num-jazzy">Copy</button></span></div>
+        <div><span>Race Director (WhatsApp only)</span><span class="num-row"><b id="num-rd">+263 714 027 120</b><button class="btn copy" type="button" id="copy-rd" data-num="+263714027120" data-target="num-rd">Copy</button></span></div>
+      </div>
+      <p class="note-sec">If you can't move: put on warm layers, use your space blanket, and give three long whistle blasts every minute.</p>
+    </section>
+
+    <footer>Built from the SkyRun Zimbabwe 2026 Event Guide (kit table, pages 13–15) and skyrunzim.com/rules-and-kit, as of 18 Nov 2026. Not affiliated with SkyRun Zimbabwe.</footer>
+  </div>
+</main>
+
+<script>
+// Races, shortest first. Colours match the race columns in the event guide's kit table.
+const RACES = [
+  { id: "T", name: "Traverse", dist: "30 km", start: "Fri 4 Dec · 07:00 · Far & Wide" },
+  { id: "C", name: "Challenge", dist: "32 km", start: "Sat 5 Dec · 08:00 · Golden Pools" },
+  { id: "U", name: "Ultra", dist: "56 km", start: "Sat 5 Dec · 04:00 · Far & Wide" },
+  { id: "B", name: "Back2Back", dist: "62 km", start: "Fri 07:00 + Sat 08:00" },
+  { id: "E", name: "Epic", dist: "65 km", start: "Sat 5 Dec · 04:00 · Far & Wide" },
+  { id: "G", name: "The GOAT", dist: "126 km", start: "Fri 4 Dec · 10:00 · Far & Wide" }
+];
+const ALL = "TCBUEG", LONG = "EG", GOAT = "G", SHORT = "TCBU";
+
+// Each item: [key, name, detail, races, website differences { races: note }]
+const SECTIONS = [
+  { title: "Navigation & electronics", items: [
+    ["gps", "GPS watch or smartphone", "", ALL, { [ALL]: "The website lists a GPS watch or handheld unit and a smartphone as separate items." }],
+    ["app", "SkyRun App loaded", "Signed in with your bib number, indemnity accepted, map saved offline (\"Saved offline ✓\"), location and compass allowed.", ALL],
+    ["power", "Small power bank", "", ALL]
+  ]},
+  { title: "Carrying & hydration", items: [
+    ["pack", "Trail running pack", "", ALL],
+    ["water15", "1.5 L water carrying capacity", "", ALL],
+    ["water1", "Extra 1 L water carrying capacity", "2.5 L in total.", LONG, { [LONG]: "The website says 2 L in total for the Epic and GOAT." }]
+  ]},
+  { title: "Nutrition", items: [
+    ["food", "Race snacks, nutrition & electrolytes", "", ALL],
+    ["ration", "Emergency ration", "Kept separate from your race food.", ALL]
+  ]},
+  { title: "Clothing", items: [
+    ["cap", "Cap or hat", "", ALL],
+    ["sun", "Suncream", "", ALL],
+    ["jacket", "Waterproof running jacket", "", ALL],
+    ["gloves", "Gloves", "", LONG],
+    ["shoes", "Good trail running shoes", "", ALL],
+    ["thermtop", "Thermal long-sleeve top", "", ALL],
+    ["thermlong", "Thermal longs", "", LONG],
+    ["waterlong", "Waterproof running longs", "", LONG, { [LONG]: "Not on the website's list." }],
+    ["beanie", "Beanie or buff", "", ALL],
+    ["socks", "Spare socks", "", ALL]
+  ]},
+  { title: "Safety", items: [
+    ["blanket", "Emergency space blanket", "", ALL],
+    ["firstaid", "First aid supplies", "Anti-cramp tablets, crepe bandage, plasters, strapping. No ibuprofen.", ALL],
+    ["torch", "Head torch", "", ALL],
+    ["batt", "Head torch batteries", "", ALL, { [SHORT]: "The website says 2 spare head torch batteries.", [LONG]: "The website says 2 sets of spare batteries." }],
+    ["torch2e", "Extra head torch", "The event guide only asks GOAT runners for this.", "E", { E: "The website asks Epic runners for 2 head torches, so pack a second to be safe." }],
+    ["torch2", "Extra head torch", "", GOAT],
+    ["batt2", "2 extra head torch batteries", "", GOAT],
+    ["whistle", "Whistle", "Distress signal: three long blasts every minute.", ALL]
+  ]},
+  { title: "Suggested", optional: true, note: "Recommended on skyrunzim.com but not compulsory.", items: [
+    ["sunnies", "Sunglasses", "", ALL],
+    ["wipes", "Wet wipes", "", ALL],
+    ["poles", "Trekking poles", "", ALL],
+    ["pain", "Painkillers (not ibuprofen)", "", ALL],
+    ["drybag", "Dry bag or ziplock bags", "", ALL],
+    ["drop", "Drop bag", "Dry clothing and back-up kit.", LONG]
+  ]},
+  { title: "Before race weekend", optional: true, note: "Not checked at kit inspection.", items: [
+    ["gpxdl", "Download this year's GPX track", "Before registration on 28 Nov. Don't use last year's route.", ALL],
+    ["contacts", "Save the emergency numbers in your phone", "They're listed at the bottom of this page.", ALL],
+    ["seconders", "Send seconders' names and pay any outstanding fees", "Otherwise seconders won't be let through the gate at Far and Wide or Aberfoyle.", ALL],
+    ["parks", "Pay Golden Pools park fees for seconders", "US$5 local adult, US$3 child, US$5 vehicle, US$12 international adult, US$10 international vehicle. Pay at registration and send proof of payment to Jazzy or skyrun@farandwide.co.zw.", ALL],
+    ["bedding", "Bring bedding if you need it", "Far and Wide cabins and glamping tents, and Aberfoyle glamping tents, provide a mattress only. Bring towels for Far and Wide cottages.", ALL]
+  ]}
+];
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let race = store.get("skyrun-group-race", "T");
+if (!RACES.some(r => r.id === race)) race = "T";
+let ticks = store.get("skyrun-group-ticks", {});
+let hideDone = false;
+
+const racesEl = document.getElementById("races");
+RACES.forEach(r => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "race"; b.id = "race-" + r.id;
+  b.style.setProperty("--c", `var(--race-${r.id})`);
+  b.innerHTML = `${r.name}<small>${r.dist}</small>`;
+  b.addEventListener("click", () => { race = r.id; store.set("skyrun-group-race", race); confirmBtn.hidden = true; render(); });
+  racesEl.appendChild(b);
+});
+
+document.getElementById("hideDone").addEventListener("click", e => {
+  hideDone = !hideDone;
+  e.currentTarget.textContent = hideDone ? "Show packed items" : "Hide packed items";
+  render();
+});
+const confirmBtn = document.getElementById("resetConfirm");
+document.getElementById("reset").addEventListener("click", () => { confirmBtn.hidden = !confirmBtn.hidden; });
+confirmBtn.addEventListener("click", () => { ticks[race] = {}; store.set("skyrun-group-ticks", ticks); confirmBtn.hidden = true; render(); });
+
+function diffFor(diffs, r) {
+  if (!diffs) return "";
+  for (const k in diffs) if (k.includes(r)) return diffs[k];
+  return "";
+}
+
+function render() {
+  document.documentElement.style.setProperty("--rc", `var(--race-${race})`);
+  RACES.forEach(r => document.getElementById("race-" + r.id).setAttribute("aria-pressed", r.id === race));
+  const info = RACES.find(r => r.id === race);
+  document.getElementById("start").textContent = info.start;
+  const mine = ticks[race] || (ticks[race] = {});
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  let total = 0, done = 0;
+
+  SECTIONS.forEach(sec => {
+    const items = sec.items.filter(i => i[3].includes(race));
+    if (!items.length) return;
+    const secDone = items.filter(i => mine[i[0]]).length;
+    if (!sec.optional) { total += items.length; done += secDone; }
+    const s = document.createElement("section");
+    s.innerHTML = `<div class="sec-head"><h2>${sec.title}</h2><span class="sec-count">${secDone} / ${items.length}</span></div>` +
+      (sec.note ? `<p class="note-sec">${sec.note}</p>` : "");
+    const ul = document.createElement("ul");
+    items.forEach(([key, name, det, who, diffs]) => {
+      const checked = !!mine[key];
+      if (hideDone && checked) return;
+      const diff = diffFor(diffs, race);
+      const li = document.createElement("li");
+      li.innerHTML = `<label class="item${checked ? " done" : ""}" for="k-${key}">
+        <input type="checkbox" id="k-${key}" ${checked ? "checked" : ""}>
+        <span class="txt"><span class="name">${name}</span>${det ? `<span class="det">${det}</span>` : ""}${diff ? `<span class="diff">${diff}</span>` : ""}</span></label>`;
+      li.querySelector("input").addEventListener("change", e => {
+        mine[key] = e.target.checked; store.set("skyrun-group-ticks", ticks); render();
+      });
+      ul.appendChild(li);
+    });
+    s.appendChild(ul);
+    list.appendChild(s);
+  });
+
+  document.getElementById("count").textContent = `${done} / ${total} compulsory packed`;
+  document.getElementById("meter").style.width = total ? (done / total * 100) + "%" : "0";
+}
+render();
+
+// Copy buttons for the emergency numbers. If the phone blocks copying, the number is selected instead so it can be copied by hand.
+document.querySelectorAll(".btn.copy").forEach(b => {
+  b.addEventListener("click", () => {
+    const reset = () => setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1800);
+    const select = () => {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById(b.dataset.target));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      b.textContent = "Selected"; reset();
+    };
+    try {
+      navigator.clipboard.writeText(b.dataset.num).then(() => { b.textContent = "Copied"; b.classList.add("ok"); reset(); }, select);
+    } catch (e) { select(); }
+  });
+});
+</script>
+</body>
+</html>
