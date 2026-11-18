@@ -145,9 +145,9 @@ ul { list-style: none; display: grid; gap: var(--gap); }
 .steps { list-style: decimal; display: grid; gap: var(--gap); padding-left: 1.4em; font-size: .88rem; line-height: 24px; }
 .steps li { padding-left: 2px; }
 .steps li::marker { color: var(--muted); font-weight: 700; }
-/* inline phone icons: 20px chips centred on the text, inside the fixed 24px line so every line is the same height */
-.ico { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; margin: 0 1px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--sky); vertical-align: middle; position: relative; top: -1px; }
-.ico svg { width: 14px; height: 14px; }
+/* inline phone icons: 22px chips on whole pixels (1px border + 2px gap + 16px symbol + 2px gap + 1px border), so the symbol is dead centre on every screen; they sit inside the fixed 24px line so every line is the same height */
+.ico { box-sizing: border-box; display: inline-grid; place-items: center; width: 22px; height: 22px; margin: 0 1px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--sky); vertical-align: -3px; line-height: 0; }
+.ico svg { display: block; width: 16px; height: 16px; shape-rendering: geometricPrecision; }
 .nw { white-space: nowrap; }
 
 /* links and contacts */
@@ -293,8 +293,8 @@ const RACES = [
   { id: "C", name: "Challenge", dist: "32 km",  when: "Sat 5 Dec, 08:00", where: "Golden Pools" },
   { id: "U", name: "Ultra",     dist: "56 km",  when: "Sat 5 Dec, 04:00", where: "Far & Wide" },
   { id: "B", name: "Back2Back", dist: "62 km",  stages: [
-      { label: "Stage 1, Traverse", when: "Fri 4 Dec, 07:00", where: "Far & Wide" },
-      { label: "Stage 2, Challenge", when: "Sat 5 Dec, 08:00", where: "Golden Pools" } ] },
+      { label: "Stage 1 – Traverse", when: "Fri 4 Dec, 07:00", where: "Far & Wide" },
+      { label: "Stage 2 – Challenge", when: "Sat 5 Dec, 08:00", where: "Golden Pools" } ] },
   { id: "E", name: "Epic",      dist: "65 km",  when: "Sat 5 Dec, 04:00", where: "Far & Wide" },
   { id: "G", name: "The GOAT",  dist: "126 km", when: "Fri 4 Dec, 10:00", where: "Far & Wide" }
 ];
