@@ -85,13 +85,12 @@ h1 span { color: var(--accent); }
 .bar .inner { min-height: var(--bar-h); padding-top: 10px; padding-bottom: 12px; display: grid; gap: 8px; align-content: center; }
 .bar-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .bar-race { display: flex; align-items: center; gap: 8px; min-width: 0; font-weight: 800; font-size: .92rem; white-space: nowrap; }
-.bar-race i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--rc); box-shadow: 0 0 0 2px rgba(255,255,255,.85); }
 .bar-race span { overflow: hidden; text-overflow: ellipsis; }
 .count { flex: none; font-weight: 700; font-size: .86rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .count.full { color: var(--accent); }
 @media (max-width: 479px) { .count .wide { display: none; } }
 .meter { height: 6px; border-radius: 99px; background: rgba(255,255,255,.16); overflow: hidden; }
-.meter span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--rc); transition: width .25s; }
+.meter span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--accent); transition: width .25s; }
 
 /* boxes: one shape for every card, item, rule and link */
 .card, .item, .rule, .link { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
@@ -138,6 +137,8 @@ ul { list-style: none; display: grid; gap: var(--gap); }
 .steps { list-style: decimal; display: grid; gap: 6px; padding-left: 1.4em; font-size: .88rem; }
 .steps li { padding-left: 2px; }
 .steps li::marker { color: var(--muted); font-weight: 700; }
+.ico { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; margin: 0 1px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--sky); vertical-align: -6px; }
+.ico svg { width: 16px; height: 16px; }
 
 /* links and contacts */
 .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--gap); }
@@ -182,7 +183,7 @@ footer a { color: inherit; }
 <div class="bar">
   <div class="inner">
     <div class="bar-row">
-      <div class="bar-race"><i aria-hidden="true"></i><span id="bar-name"></span></div>
+      <div class="bar-race"><span id="bar-name"></span></div>
       <div class="count" id="count" aria-live="polite"></div>
     </div>
     <div class="meter" aria-hidden="true"><span id="meter"></span></div>
@@ -217,16 +218,16 @@ footer a { color: inherit; }
         </div>
         <ol class="steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios">
           <li>Open the app link below in <b>Safari</b>.</li>
-          <li>Tap <b>Share</b>, the square with an arrow, then <b>Add to Home Screen</b>, then <b>Add</b>.</li>
+          <li>Tap <span class="ico" role="img" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span> <b>Share</b>, then <span class="ico" role="img" aria-label="Add to Home Screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg></span> <b>Add to Home Screen</b>, then <b>Add</b>.</li>
           <li>Open it from the new icon. Sign in with your bib number and accept the indemnity.</li>
-          <li>Tap <b>☰</b>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <ol class="steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android" hidden>
           <li>Open the app link below in <b>Chrome</b>.</li>
-          <li>Tap <b>⋮</b> at the top right, then <b>Install app</b> or <b>Add to Home screen</b>.</li>
+          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></span> at the top right, then <b>Install app</b> or <b>Add to Home screen</b>.</li>
           <li>Open it from the new icon. Sign in with your bib number and accept the indemnity.</li>
-          <li>Tap <b>☰</b>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <a class="btn primary" href="https://skyrunzim.github.io/" target="_blank" rel="noopener">Open the SkyRun App</a>
