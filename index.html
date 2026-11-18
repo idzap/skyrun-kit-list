@@ -14,10 +14,9 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.ico?v=3" sizes="48x48">
-<link rel="icon" href="icon.svg?v=3" type="image/svg+xml">
-<link rel="icon" href="icon-192.png?v=3" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -145,9 +144,9 @@ ul { list-style: none; display: grid; gap: var(--gap); }
 .steps { list-style: decimal; display: grid; gap: var(--gap); padding-left: 1.4em; font-size: .88rem; line-height: 24px; }
 .steps li { padding-left: 2px; }
 .steps li::marker { color: var(--muted); font-weight: 700; }
-/* inline phone icons: 22px chips on whole pixels (1px border + 2px gap + 16px symbol + 2px gap + 1px border), so the symbol is dead centre on every screen; they sit inside the fixed 24px line so every line is the same height */
-.ico { box-sizing: border-box; display: inline-grid; place-items: center; width: 22px; height: 22px; margin: 0 1px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--sky); vertical-align: -3px; line-height: 0; }
-.ico svg { display: block; width: 16px; height: 16px; shape-rendering: geometricPrecision; }
+/* inline phone icons: each is one 22x22 drawing (box and symbol together), so the symbol can't drift off-centre at any zoom; it sits inside the fixed 24px line so every line is the same height */
+.ico { display: inline-block; width: 22px; height: 22px; margin: 0 1px; color: var(--sky); vertical-align: -6px; overflow: visible; }
+.ico-box { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
 .nw { white-space: nowrap; }
 
 /* links and contacts */
@@ -228,18 +227,18 @@ footer a { color: inherit; }
         </div>
         <ol class="steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios">
           <li>Open the app link below in <b>Safari</b>.</li>
-          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span> <b>Share</b></span>, then <span class="nw"><span class="ico" role="img" aria-label="View More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 10.5l4 4 4-4"/></svg></span> <b>View</b></span><b> More</b>, then <span class="nw"><span class="ico" role="img" aria-label="Add to Home Screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg></span> <b>Add</b></span><b> to Home Screen</b>.</li>
+          <li>Tap <span class="nw"><svg class="ico" role="img" aria-label="Share" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></g></svg> <b>Share</b></span>, then <span class="nw"><svg class="ico" role="img" aria-label="View More" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 10.5l4 4 4-4"/></g></svg> <b>View</b></span><b> More</b>, then <span class="nw"><svg class="ico" role="img" aria-label="Add to Home Screen" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></g></svg> <b>Add</b></span><b> to Home Screen</b>.</li>
           <li>Leave <b>Open as Web App</b> switched on and tap <b>Add</b> at the top right.</li>
           <li>Go to your Home Screen and open the new <b>SkyRunZim</b> app. Sign in with your bib number and accept the indemnity.</li>
-          <li>In the app, tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>In the app, tap <span class="nw"><svg class="ico" role="img" aria-label="Menu" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></svg>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <ol class="steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android" hidden>
           <li>Open the app link below in <b>Chrome</b>.</li>
-          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></span> at</span> the top right, then <b>Install app</b>. On some phones it's called <b>Add to Home screen</b>.</li>
+          <li>Tap <span class="nw"><svg class="ico" role="img" aria-label="Menu" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></g></svg> at</span> the top right, then <b>Install app</b>. On some phones it's called <b>Add to Home screen</b>.</li>
           <li>Tap <b>Install</b> or <b>Add</b> to confirm.</li>
           <li>Open the new <b>SkyRunZim</b> app. Depending on your phone, it's on your Home screen or in your apps list. Sign in with your bib number and accept the indemnity.</li>
-          <li>In the app, tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>In the app, tap <span class="nw"><svg class="ico" role="img" aria-label="Menu" viewBox="0 0 22 22" width="22" height="22"><rect class="ico-box" x=".5" y=".5" width="21" height="21" rx="5.5"/><g transform="translate(3 3) scale(.6667)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></svg>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <a class="btn primary" href="https://skyrunzim.github.io/" target="_blank" rel="noopener">Open the SkyRun App</a>
