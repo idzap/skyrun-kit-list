@@ -80,6 +80,10 @@ h1 span { color: var(--accent); }
 .race[aria-pressed="true"] .tick { display: block; }
 @media (max-width: 359px) { .race { padding: 9px 8px; font-size: .78rem; } .race small { font-size: .7rem; } .race .tick { right: 6px; bottom: 6px; } }
 
+.chosen { font-size: .9rem; color: var(--head-muted); }
+.chosen b { color: #fff; font-weight: 700; }
+.chosen .stage { display: block; margin-top: 2px; }
+
 /* pinned bar: chosen race and progress */
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--head); color: #fff; border-top: 1px solid var(--head-line); box-shadow: 0 8px 16px -12px rgba(0,0,0,.55); }
 .bar .inner { min-height: var(--bar-h); padding-top: 10px; padding-bottom: 12px; display: grid; gap: 8px; align-content: center; }
@@ -285,7 +289,9 @@ const RACES = [
   { id: "T", name: "Traverse",  dist: "30 km",  when: "Fri 4 Dec, 07:00", where: "Far & Wide" },
   { id: "C", name: "Challenge", dist: "32 km",  when: "Sat 5 Dec, 08:00", where: "Golden Pools" },
   { id: "U", name: "Ultra",     dist: "56 km",  when: "Sat 5 Dec, 04:00", where: "Far & Wide" },
-  { id: "B", name: "Back2Back", dist: "62 km",  when: "Fri 07:00 and Sat 08:00", where: "Far & Wide, then Golden Pools" },
+  { id: "B", name: "Back2Back", dist: "62 km",  stages: [
+      { label: "Stage 1, Traverse", when: "Fri 4 Dec, 07:00", where: "Far & Wide" },
+      { label: "Stage 2, Challenge", when: "Sat 5 Dec, 08:00", where: "Golden Pools" } ] },
   { id: "E", name: "Epic",      dist: "65 km",  when: "Sat 5 Dec, 04:00", where: "Far & Wide" },
   { id: "G", name: "The GOAT",  dist: "126 km", when: "Fri 4 Dec, 10:00", where: "Far & Wide" }
 ];
@@ -409,7 +415,10 @@ function render() {
   const info = RACES.find(r => r.id === race);
   document.documentElement.style.setProperty("--rc", `var(--race-${race})`);
   RACES.forEach(r => $("race-" + r.id).setAttribute("aria-pressed", r.id === race));
-  $("chosen").innerHTML = `<b>${esc(info.name)} · ${esc(info.dist)}</b>. Starts ${esc(info.when)}, ${esc(info.where)}.`;
+  // Back2Back is the only race over two days, so it lists both stage starts.
+  $("chosen").innerHTML = info.stages
+    ? `<b>${esc(info.name)} · ${esc(info.dist)}</b>, over two days.` + info.stages.map(st => `<span class="stage">${esc(st.label)}: ${esc(st.when)}, ${esc(st.where)}.</span>`).join("")
+    : `<b>${esc(info.name)} · ${esc(info.dist)}</b>. Starts ${esc(info.when)}, ${esc(info.where)}.`;
   $("bar-name").textContent = `${info.name} · ${info.dist}`;
 
   const done = mine(), list = $("list");
