@@ -134,11 +134,13 @@ ul { list-style: none; display: grid; gap: var(--gap); }
 .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: var(--radius-btn); background: var(--bg); }
 .seg button { min-height: 36px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); font-weight: 700; font-size: .84rem; cursor: pointer; }
 .seg button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.14); }
-.steps { list-style: decimal; display: grid; gap: 6px; padding-left: 1.4em; font-size: .88rem; }
+.steps { list-style: decimal; display: grid; gap: var(--gap); padding-left: 1.4em; font-size: .88rem; line-height: 24px; }
 .steps li { padding-left: 2px; }
 .steps li::marker { color: var(--muted); font-weight: 700; }
-.ico { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; margin: 0 1px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--sky); vertical-align: -6px; }
-.ico svg { width: 16px; height: 16px; }
+/* inline phone icons: 20px chips centred on the text, inside the fixed 24px line so every line is the same height */
+.ico { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; margin: 0 1px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--sky); vertical-align: middle; position: relative; top: -1px; }
+.ico svg { width: 14px; height: 14px; }
+.nw { white-space: nowrap; }
 
 /* links and contacts */
 .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--gap); }
@@ -218,16 +220,16 @@ footer a { color: inherit; }
         </div>
         <ol class="steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios">
           <li>Open the app link below in <b>Safari</b>.</li>
-          <li>Tap <span class="ico" role="img" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span> <b>Share</b>, then <span class="ico" role="img" aria-label="Add to Home Screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg></span> <b>Add to Home Screen</b>, then <b>Add</b>.</li>
+          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span> <b>Share</b></span>, then <span class="nw"><span class="ico" role="img" aria-label="Add to Home Screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg></span> <b>Add</b></span><b> to Home Screen</b>, then <b>Add</b>.</li>
           <li>Open it from the new icon. Sign in with your bib number and accept the indemnity.</li>
-          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <ol class="steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android" hidden>
           <li>Open the app link below in <b>Chrome</b>.</li>
-          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></span> at the top right, then <b>Install app</b> or <b>Add to Home screen</b>.</li>
+          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></span> at</span> the top right, then <b>Install app</b> or <b>Add to Home screen</b>.</li>
           <li>Open it from the new icon. Sign in with your bib number and accept the indemnity.</li>
-          <li>Tap <span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>, then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
+          <li>Tap <span class="nw"><span class="ico" role="img" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>,</span> then <b>Download map for offline</b>. Wait for "Saved offline ✓".</li>
           <li>Allow location and compass when asked.</li>
         </ol>
         <a class="btn primary" href="https://skyrunzim.github.io/" target="_blank" rel="noopener">Open the SkyRun App</a>
