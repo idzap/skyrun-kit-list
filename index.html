@@ -382,7 +382,7 @@ RACES.forEach(r => {
   $("races").appendChild(b);
 });
 
-// Progress actions
+// Hide packed and Untick all
 $("hideDone").addEventListener("click", e => {
   hideDone = !hideDone;
   e.currentTarget.setAttribute("aria-pressed", hideDone);
@@ -470,7 +470,7 @@ function refresh() {
   $("meter").style.width = total ? (packed / total * 100) + "%" : "0";
 }
 
-// Links inside a checklist row (such as "How to install it") sit inside the row's label, so a tap would tick the box instead of following the link.
+// Links inside a checklist row (such as "How to install the app") sit inside the row's label, so a tap would tick the box instead of following the link.
 // Cancel that, and scroll to the linked section instead, below the pinned bar.
 $("list").addEventListener("click", e => {
   const a = e.target.closest('a[href^="#"]');
