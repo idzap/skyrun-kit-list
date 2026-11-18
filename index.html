@@ -3,196 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Unofficial SkyRun Kit List</title>
+<title>SkyRun 2026 Kit Checklist (unofficial)</title>
+<meta name="description" content="Pick your SkyRun Zimbabwe 2026 race and tick off the compulsory kit as you pack. Unofficial, free, and works on your phone.">
 <meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#142a33">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SkyRun 2026 Kit Checklist">
+<meta property="og:description" content="Pick your race and tick off the compulsory kit as you pack. Unofficial runner's tool.">
+<meta property="og:image" content="https://skyrun-kit-list.pages.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Layout: phone-first. A sticky bar holds the race picker and progress; below it the grouped tick-list for the chosen race, then optional lists and official links. Colours follow the event guide: deep teal ground, orange headings, one colour per race. */
+/* Phone-first. Teal header holds the title and the race picker; a slim pinned bar shows the chosen race and progress; below it the tick-list, rules, links and emergency numbers. Colours follow the event guide: deep teal ground, orange headings, one colour per race. */
 :root {
   --bg: #eef3f5; --surface: #ffffff; --ink: #142a33; --muted: #50656e; --line: #d3dee3;
-  --head: #142a33; --head-ink: #ffffff; --head-muted: #a9bcc4;
-  --orange: #c4620f; --orange-soft: #fbeadb; --sky: #1588b8;
-  --done: #e3f1f8;
+  --head: #142a33; --head-ink: #ffffff; --head-muted: #a9bcc4; --head-line: rgba(255,255,255,.2);
+  --orange: #c4620f; --orange-soft: #fbeadb; --accent: #f0953f; --sky: #1588b8; --done: #e3f1f8;
   --race-T: #3b656a; --race-C: #296a94; --race-B: #6a4c93; --race-U: #1f8fc4; --race-E: #b8703f; --race-G: #b5525a;
   --font: "Montserrat", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --gutter: 16px;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root {
     --bg: #0d1d24; --surface: #142a33; --ink: #e8f0f3; --muted: #9fb3bb; --line: #24414d;
-    --head: #0a171d; --head-ink: #ffffff; --head-muted: #8ea6b0;
+    --head: #0a171d; --head-muted: #8ea6b0;
     --orange: #f0953f; --orange-soft: #3a2614; --sky: #4cc0ec; --done: #173a49;
     --race-T: #5f9aa0; --race-C: #4a97c9; --race-B: #9a7cc4; --race-U: #45b3e6; --race-E: #d99466; --race-G: #db7a82;
     color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
-  --bg: #0d1d24; --surface: #142a33; --ink: #e8f0f3; --muted: #9fb3bb; --line: #24414d;
-  --head: #0a171d; --head-ink: #ffffff; --head-muted: #8ea6b0;
-  --orange: #f0953f; --orange-soft: #3a2614; --sky: #4cc0ec; --done: #173a49;
-  --race-T: #5f9aa0; --race-C: #4a97c9; --race-B: #9a7cc4; --race-U: #45b3e6; --race-E: #d99466; --race-G: #db7a82;
-  color-scheme: dark;
-}
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font: 500 15px/1.5 var(--font); margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { background: var(--bg); color: var(--ink); font: 500 15px/1.5 var(--font); margin: 0; -webkit-tap-highlight-color: transparent; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--head); }
-.inner { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-h1, h2 { margin: 0; text-wrap: balance; }
+.inner { max-width: 720px; margin: 0 auto; padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+h1, h2, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* header band */
+/* header */
 .top { background: var(--head); color: var(--head-ink); }
-.top .inner { padding-block: 22px 14px; display: grid; gap: 6px; }
-.eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--head-muted); }
-h1 { font-size: 1.9rem; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
-h1 span { color: #f0953f; }
-.top p { margin: 0; color: var(--head-muted); font-size: .9rem; }
-
-/* sticky picker */
-.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--head); border-bottom: 3px solid var(--rc, var(--sky)); }
-.bar .inner { padding-block: 10px 12px; display: grid; gap: 10px; }
-.races { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; padding: 0 4px; }
-.races::-webkit-scrollbar { display: none; }
-.race { flex: none; border: 1.5px solid rgba(255,255,255,.22); background: transparent; color: #ffffff; border-radius: 8px; padding: 6px 10px; font: 700 .85rem/1.15 var(--font); cursor: pointer; text-align: left; }
-.race small { display: block; font-weight: 500; font-size: .72rem; opacity: .75; }
+.top .inner { padding-block: max(20px, env(safe-area-inset-top, 0px)) 18px; display: grid; gap: 14px; }
+.eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--head-muted); }
+h1 { font-size: clamp(1.7rem, 7vw, 2.2rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; margin-top: 4px; }
+h1 span { color: var(--accent); }
+.lede { color: var(--head-muted); font-size: .9rem; max-width: 46ch; }
+.pick-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--head-muted); margin-bottom: -6px; }
+.races { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+@media (min-width: 640px) { .races { grid-template-columns: repeat(6, 1fr); } }
+.race { border: 1.5px solid var(--head-line); background: transparent; color: #fff; border-radius: 10px; padding: 8px 10px; font-weight: 700; font-size: .86rem; line-height: 1.15; cursor: pointer; text-align: left; min-height: 48px; transition: background-color .15s, border-color .15s; }
+.race small { display: block; font-weight: 500; font-size: .74rem; opacity: .75; margin-top: 2px; }
+.race:hover { border-color: rgba(255,255,255,.45); }
 .race[aria-pressed="true"] { background: var(--c); border-color: var(--c); }
-.race:focus-visible, .btn:focus-visible, .item input:focus-visible { outline: 3px solid #f0953f; outline-offset: 2px; }
-.prog { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px; color: #ffffff; }
-.prog .count { font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.prog .start { color: var(--head-muted); font-size: .75rem; white-space: nowrap; }
-.meter { flex-basis: 100%; }
-@media (max-width: 480px) {
-  .bar .inner { padding-block: 8px 9px; gap: 7px; }
-  .race { padding: 5px 9px; font-size: .8rem; }
-  .race small { font-size: .68rem; }
-}
-.meter { grid-column: 1 / -1; height: 6px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: hidden; }
-.meter span { display: block; height: 100%; width: 0; background: var(--rc, var(--sky)); transition: width .25s; }
-@media (prefers-reduced-motion: reduce) { .meter span { transition: none; } }
+.race[aria-pressed="true"] small { opacity: .95; }
+.when { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .84rem; color: var(--head-muted); }
+.when b { color: #fff; font-weight: 700; }
+.when .soon { color: var(--accent); font-weight: 700; }
+
+/* pinned progress bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--head); color: #fff; border-top: 1px solid var(--head-line); box-shadow: 0 6px 14px -10px rgba(0,0,0,.5); }
+.bar .inner { padding-block: 9px 10px; display: grid; gap: 7px; }
+.bar-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.bar-race { font-weight: 800; font-size: .92rem; display: flex; align-items: center; gap: 8px; min-width: 0; white-space: nowrap; }
+.bar-race i { width: 10px; height: 10px; border-radius: 50%; background: var(--rc); flex: none; }
+.bar-race button { background: none; border: 0; padding: 0; color: var(--head-muted); font-size: .76rem; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.count { font-weight: 700; font-size: .86rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.count.full { color: var(--accent); }
+@media (max-width: 479px) { .count .wide { display: none; } }
+.meter { height: 6px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: hidden; }
+.meter span { display: block; height: 100%; width: 0; background: var(--rc); border-radius: inherit; transition: width .25s; }
 
 /* body */
-main .inner { padding-block: 20px 48px; display: grid; gap: 24px; }
-.notice { background: var(--orange-soft); border-radius: 10px; padding: 12px 14px; font-size: .88rem; display: grid; gap: 4px; }
+main .inner { padding-block: 20px 56px; display: grid; gap: 28px; }
+.notice { background: var(--orange-soft); border-radius: 12px; padding: 12px 14px; font-size: .86rem; }
 .notice b { color: var(--orange); }
-.actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 7px 12px; font: 700 .82rem var(--font); cursor: pointer; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: -10px; }
+.btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 8px 12px; font-weight: 700; font-size: .82rem; cursor: pointer; min-height: 38px; }
+.btn[aria-pressed="true"] { border-color: var(--rc); color: var(--rc); }
 .btn.danger { border-color: var(--orange); color: var(--orange); }
-#list { display: grid; gap: 22px; }
+#list { display: grid; gap: 26px; }
 section { display: grid; gap: 8px; }
 .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-h2 { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--orange); }
-.sec-count { color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
-.note-sec { color: var(--muted); font-size: .85rem; margin: 0; }
+h2 { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--orange); }
+.sec-count { color: var(--muted); font-size: .84rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sec-count.full { color: var(--rc); }
+.note { color: var(--muted); font-size: .84rem; }
+.tag { display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; margin-left: 6px; vertical-align: 2px; }
 ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
-.item { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; cursor: pointer; }
-.item input { width: 22px; height: 22px; margin: 0; accent-color: var(--rc, var(--sky)); flex: none; cursor: pointer; }
-.item .txt { display: grid; gap: 3px; min-width: 0; }
-.item .name { font-weight: 700; }
-.item .det { color: var(--muted); font-size: .85rem; }
-.item .diff { color: var(--orange); font-size: .8rem; font-weight: 600; }
+.item, .rule { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.item { cursor: pointer; transition: background-color .15s; }
+.item input { width: 22px; height: 22px; margin: 0; accent-color: var(--rc); flex: none; cursor: pointer; }
+.txt { display: grid; gap: 3px; min-width: 0; }
+.name { font-weight: 700; }
+.det { color: var(--muted); font-size: .85rem; }
+.diff { color: var(--orange); font-size: .8rem; font-weight: 600; }
 .item.done { background: var(--done); border-color: transparent; }
 .item.done .name { text-decoration: line-through; text-decoration-color: var(--muted); }
-.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
-.link { display: grid; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; text-decoration: none; color: var(--ink); }
+.all-done { color: var(--muted); font-size: .85rem; padding: 4px 2px; }
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.link { display: grid; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; text-decoration: none; color: var(--ink); }
+.link:hover { border-color: var(--sky); }
 .link b { color: var(--sky); }
+.link b::after { content: " ↗"; font-weight: 600; }
 .link span { color: var(--muted); font-size: .8rem; }
-.contacts { display: grid; gap: 0; font-size: .9rem; }
-.contacts > div { display: grid; gap: 4px; border-bottom: 1px solid var(--line); padding: 10px 0; }
-.contacts > div > span:first-child { font-weight: 600; }
-.contacts b { font-variant-numeric: tabular-nums; user-select: all; font-size: 1.05rem; }
-.contacts a, .contacts b a { color: inherit; text-decoration: none; }
-.num-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.btn.copy { padding: 5px 12px; min-width: 70px; }
-.btn.copy.ok { border-color: var(--sky); color: var(--sky); }
-.muted-s { color: var(--muted); font-size: .78rem; }
-footer { color: var(--muted); font-size: .78rem; }
+.contacts { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 12px; }
+.contact { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.contact:last-child { border-bottom: 0; }
+.contact .who { font-size: .84rem; font-weight: 600; color: var(--muted); }
+.contact .num { display: block; font-weight: 800; font-size: 1.04rem; font-variant-numeric: tabular-nums; user-select: all; color: var(--ink); }
+.nw { white-space: nowrap; }
+.copy { min-width: 76px; }
+.copy.ok { border-color: var(--sky); color: var(--sky); }
+footer { color: var(--muted); font-size: .78rem; display: grid; gap: 4px; }
+footer a { color: inherit; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  body::before, .bar, .actions, .notice, .copy, .races, .pick-label { display: none !important; }
+  .top { background: none; color: #000; } .top .inner { padding-top: 0; } .lede, .when, .when b { color: #333; }
+  .item, .rule, .contacts, .link { break-inside: avoid; border-color: #bbb; }
+}
 </style>
 </head>
 <body>
 
-<header class="top">
+<header class="top" id="top">
   <div class="inner">
-    <div class="eyebrow">SkyRun Zimbabwe 2026 · Unofficial runner's tool</div>
-    <h1>Compulsory kit <span>checklist</span></h1>
-    <p>Pick your race, then tick items off as you pack. Ticks are saved on this phone only.</p>
+    <div>
+      <div class="eyebrow">SkyRun Zimbabwe 2026 · Unofficial</div>
+      <h1>Compulsory kit <span>checklist</span></h1>
+    </div>
+    <p class="lede">Pick your race, then tick items off as you pack. Your ticks are saved on this device only.</p>
+    <div class="pick-label" id="pick-label">Your race</div>
+    <div class="races" role="group" aria-labelledby="pick-label" id="races"></div>
+    <div class="when" id="when" aria-live="polite"></div>
   </div>
 </header>
 
-<div class="bar" id="bar">
+<div class="bar">
   <div class="inner">
-    <div class="races" role="group" aria-label="Choose your race" id="races"></div>
-    <div class="prog">
-      <div class="count" id="count">0 / 0 packed</div>
-      <div class="start" id="start"></div>
-      <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+    <div class="bar-row">
+      <div class="bar-race"><i aria-hidden="true"></i><span id="bar-name"></span><button type="button" id="change">Change</button></div>
+      <div class="count" id="count" aria-live="polite"></div>
     </div>
+    <div class="meter" aria-hidden="true"><span id="meter"></span></div>
   </div>
 </div>
 
 <main>
   <div class="inner">
-    <div class="notice">
-      <div><b>Unofficial.</b> A runner made this to help with packing. It isn't from SkyRun Zimbabwe. It follows the 2026 Event Guide's kit table. Where the kit list on skyrunzim.com differs, the item says so in orange, and it's safest to pack whichever list asks for more. The race director has the final word at kit inspection.</div>
-    </div>
+    <p class="notice"><b>Unofficial.</b> Made by a fellow runner to help with packing, not by SkyRun Zimbabwe. It follows the 2026 Event Guide's kit table. Where the kit list on skyrunzim.com differs, the item says so in orange: pack whichever asks for more. The race director has the final word at kit inspection.</p>
 
     <div class="actions">
-      <button class="btn" id="hideDone" type="button">Hide packed items</button>
-      <button class="btn" id="reset" type="button">Untick this race</button>
+      <button class="btn" id="hideDone" type="button" aria-pressed="false">Hide packed items</button>
+      <button class="btn" id="reset" type="button" aria-expanded="false" aria-controls="resetConfirm">Untick this race</button>
       <button class="btn danger" id="resetConfirm" type="button" hidden>Yes, untick all</button>
     </div>
 
     <div id="list"></div>
 
-    <section>
-      <div class="sec-head"><h2>Rules that affect your kit</h2></div>
+    <section aria-labelledby="h-rules">
+      <h2 id="h-rules">Rules that affect your kit</h2>
       <ul>
-        <li class="item" style="cursor:default"><span class="txt"><span class="name">10 minutes per missing item</span><span class="det">Kit is checked at registration (you can't register without passing) and mainly at the finish.</span></span></li>
-        <li class="item" style="cursor:default"><span class="txt"><span class="name">No NSAIDs</span><span class="det">No ibuprofen or other anti-inflammatories in your first aid kit.</span></span></li>
-        <li class="item" style="cursor:default"><span class="txt"><span class="name">Finish with what you started with</span><span class="det">Losing kit on course costs 30 minutes. Littering costs 60.</span></span></li>
-        <li class="item" style="cursor:default"><span class="txt"><span class="name">Kit changes are announced 24 hours before</span><span class="det">The race director may change the list because of weather. Weather reports come out a week before and 48 hours before.</span></span></li>
+        <li class="rule"><span class="txt"><span class="name">10-minute penalty per missing item</span><span class="det">Kit is checked at registration (you can't register without passing) and mainly at the finish.</span></span></li>
+        <li class="rule"><span class="txt"><span class="name">No NSAIDs</span><span class="det">No ibuprofen or other anti-inflammatories in your first aid kit.</span></span></li>
+        <li class="rule"><span class="txt"><span class="name">Finish with what you started with</span><span class="det">Losing kit on course costs 30 minutes. Littering costs 60.</span></span></li>
+        <li class="rule"><span class="txt"><span class="name">Kit changes are announced 24 hours before</span><span class="det">The race director may change the list because of weather. Weather reports come out a week before and 48 hours before.</span></span></li>
       </ul>
     </section>
 
-    <section>
-      <div class="sec-head"><h2>Official info</h2></div>
+    <section aria-labelledby="h-links">
+      <h2 id="h-links">Official info</h2>
       <div class="links">
         <a class="link" href="https://www.skyrunzim.com/rules-and-kit" target="_blank" rel="noopener"><b>Race rules &amp; kit list</b><span>skyrunzim.com</span></a>
         <a class="link" href="https://www.skyrunzim.com/races/tracksandmaps" target="_blank" rel="noopener"><b>2026 GPX tracks &amp; maps</b><span>The route has changed: get these before 28 Nov</span></a>
         <a class="link" href="https://www.skyrunzim.com/races/firstaidpdf" target="_blank" rel="noopener"><b>First Aid PDF</b><span>Compulsory reading</span></a>
-        <a class="link" href="https://www.skyrunzim.com/races/directions" target="_blank" rel="noopener"><b>Directions</b><span>Leave Harare by 13:00</span></a>
+        <a class="link" href="https://www.skyrunzim.com/races/directions" target="_blank" rel="noopener"><b>Directions</b><span>Getting to Far &amp; Wide and Golden Pools</span></a>
         <a class="link" href="https://www.skyrunzim.com/races" target="_blank" rel="noopener"><b>Races &amp; profiles</b><span>skyrunzim.com</span></a>
       </div>
-      <p class="note-sec">The full 2026 Event Guide PDF was sent to entrants by the organisers.</p>
+      <p class="note">The full 2026 Event Guide PDF was sent to entrants by the organisers.</p>
     </section>
 
-    <section>
-      <div class="sec-head"><h2>Emergency numbers</h2></div>
+    <section aria-labelledby="h-sos">
+      <h2 id="h-sos">Emergency numbers</h2>
       <div class="contacts">
-        <div><span>ACE Air &amp; Ambulance <small class="muted-s">· lines 901 to 904</small></span><span class="num-row"><b id="num-ace">+263 782 999 901</b><button class="btn copy" type="button" id="copy-ace" data-num="+263782999901" data-target="num-ace">Copy</button></span></div>
-        <div><span>ACE WhatsApp</span><span class="num-row"><b id="num-acewa">+263 782 999 904</b><button class="btn copy" type="button" id="copy-acewa" data-num="+263782999904" data-target="num-acewa">Copy</button></span></div>
-        <div><span>Jazzy (emergency contact)</span><span class="num-row"><b id="num-jazzy">+263 78 066 1516</b><button class="btn copy" type="button" id="copy-jazzy" data-num="+263780661516" data-target="num-jazzy">Copy</button></span></div>
-        <div><span>Race Director (WhatsApp only)</span><span class="num-row"><b id="num-rd">+263 714 027 120</b><button class="btn copy" type="button" id="copy-rd" data-num="+263714027120" data-target="num-rd">Copy</button></span></div>
+        <div class="contact"><div><span class="who">ACE Air &amp; Ambulance <span class="nw">· lines 901–904</span></span><b class="num" id="num-ace">+263 782 999 901</b></div><button class="btn copy" type="button" data-num="+263782999901" data-target="num-ace" aria-label="Copy ACE Air and Ambulance number">Copy</button></div>
+        <div class="contact"><div><span class="who">ACE WhatsApp</span><b class="num" id="num-acewa">+263 782 999 904</b></div><button class="btn copy" type="button" data-num="+263782999904" data-target="num-acewa" aria-label="Copy ACE WhatsApp number">Copy</button></div>
+        <div class="contact"><div><span class="who">Jazzy (emergency contact)</span><b class="num" id="num-jazzy">+263 78 066 1516</b></div><button class="btn copy" type="button" data-num="+263780661516" data-target="num-jazzy" aria-label="Copy Jazzy's number">Copy</button></div>
+        <div class="contact"><div><span class="who">Race Director (WhatsApp only)</span><b class="num" id="num-rd">+263 714 027 120</b></div><button class="btn copy" type="button" data-num="+263714027120" data-target="num-rd" aria-label="Copy Race Director's number">Copy</button></div>
       </div>
-      <p class="note-sec">If you can't move: put on warm layers, use your space blanket, and give three long whistle blasts every minute.</p>
+      <p class="note">If you can't move: put on warm layers, use your space blanket, and give three long whistle blasts every minute.</p>
     </section>
 
-    <footer>Built from the SkyRun Zimbabwe 2026 Event Guide (kit table, pages 13–15) and skyrunzim.com/rules-and-kit, as of 18 Nov 2026. Not affiliated with SkyRun Zimbabwe.</footer>
+    <footer>
+      <p>Built from the SkyRun Zimbabwe 2026 Event Guide (kit table, pages 13–15) and <a href="https://www.skyrunzim.com/rules-and-kit" target="_blank" rel="noopener">skyrunzim.com/rules-and-kit</a>, checked 18 Nov 2026.</p>
+      <p>Not affiliated with SkyRun Zimbabwe. Nothing you tick leaves your device.</p>
+    </footer>
   </div>
 </main>
 
 <script>
-// Races, shortest first. Colours match the race columns in the event guide's kit table.
+// Races in picker order. Start times are Zimbabwe time (UTC+2), from the event guide's race-weekend schedule.
 const RACES = [
-  { id: "T", name: "Traverse", dist: "30 km", start: "Fri 4 Dec · 07:00 · Far & Wide" },
-  { id: "C", name: "Challenge", dist: "32 km", start: "Sat 5 Dec · 08:00 · Golden Pools" },
-  { id: "U", name: "Ultra", dist: "56 km", start: "Sat 5 Dec · 04:00 · Far & Wide" },
-  { id: "B", name: "Back2Back", dist: "62 km", start: "Fri 07:00 + Sat 08:00" },
-  { id: "E", name: "Epic", dist: "65 km", start: "Sat 5 Dec · 04:00 · Far & Wide" },
-  { id: "G", name: "The GOAT", dist: "126 km", start: "Fri 4 Dec · 10:00 · Far & Wide" }
+  { id: "T", name: "Traverse",  dist: "30 km",  start: "2026-12-04T07:00:00+02:00", when: "Fri 4 Dec · 07:00", where: "Far & Wide" },
+  { id: "C", name: "Challenge", dist: "32 km",  start: "2026-12-05T08:00:00+02:00", when: "Sat 5 Dec · 08:00", where: "Golden Pools" },
+  { id: "U", name: "Ultra",     dist: "56 km",  start: "2026-12-05T04:00:00+02:00", when: "Sat 5 Dec · 04:00", where: "Far & Wide" },
+  { id: "B", name: "Back2Back", dist: "62 km",  start: "2026-12-04T07:00:00+02:00", when: "Fri 07:00 + Sat 08:00", where: "Far & Wide, then Golden Pools" },
+  { id: "E", name: "Epic",      dist: "65 km",  start: "2026-12-05T04:00:00+02:00", when: "Sat 5 Dec · 04:00", where: "Far & Wide" },
+  { id: "G", name: "The GOAT",  dist: "126 km", start: "2026-12-04T10:00:00+02:00", when: "Fri 4 Dec · 10:00", where: "Far & Wide" }
 ];
-const ALL = "TCBUEG", LONG = "EG", GOAT = "G", SHORT = "TCBU";
+const ALL = "TCUBEG", LONG = "EG", GOAT = "G", SHORT = "TCUB";
 
-// Each item: [key, name, detail, races, website differences { races: note }]
+// Each item: [key, name, detail, races it applies to, website differences { races: note }]
 const SECTIONS = [
   { title: "Navigation & electronics", items: [
     ["gps", "GPS watch or smartphone", "", ALL, { [ALL]: "The website lists a GPS watch or handheld unit and a smartphone as separate items." }],
@@ -247,33 +275,56 @@ const SECTIONS = [
   ]}
 ];
 
+// Saved state. Storage can be blocked (private browsing), so every read and write is guarded.
 const store = {
-  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v) ?? d; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 let race = store.get("skyrun-group-race", "T");
 if (!RACES.some(r => r.id === race)) race = "T";
 let ticks = store.get("skyrun-group-ticks", {});
+if (typeof ticks !== "object" || Array.isArray(ticks)) ticks = {};
 let hideDone = false;
 
-const racesEl = document.getElementById("races");
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const confirmBtn = $("resetConfirm"), resetBtn = $("reset");
+
+// Race picker
 RACES.forEach(r => {
   const b = document.createElement("button");
   b.type = "button"; b.className = "race"; b.id = "race-" + r.id;
   b.style.setProperty("--c", `var(--race-${r.id})`);
-  b.innerHTML = `${r.name}<small>${r.dist}</small>`;
-  b.addEventListener("click", () => { race = r.id; store.set("skyrun-group-race", race); confirmBtn.hidden = true; render(); });
-  racesEl.appendChild(b);
+  b.innerHTML = `${esc(r.name)}<small>${esc(r.dist)}</small>`;
+  b.addEventListener("click", () => {
+    if (race === r.id) return;
+    race = r.id; store.set("skyrun-group-race", race);
+    closeConfirm(); render();
+  });
+  $("races").appendChild(b);
+});
+$("change").addEventListener("click", () => {
+  $("top").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  $("race-" + race).focus({ preventScroll: true });
 });
 
-document.getElementById("hideDone").addEventListener("click", e => {
+// Actions
+$("hideDone").addEventListener("click", e => {
   hideDone = !hideDone;
+  e.currentTarget.setAttribute("aria-pressed", hideDone);
   e.currentTarget.textContent = hideDone ? "Show packed items" : "Hide packed items";
   render();
 });
-const confirmBtn = document.getElementById("resetConfirm");
-document.getElementById("reset").addEventListener("click", () => { confirmBtn.hidden = !confirmBtn.hidden; });
-confirmBtn.addEventListener("click", () => { ticks[race] = {}; store.set("skyrun-group-ticks", ticks); confirmBtn.hidden = true; render(); });
+function closeConfirm() { confirmBtn.hidden = true; resetBtn.setAttribute("aria-expanded", "false"); }
+resetBtn.addEventListener("click", () => {
+  const open = confirmBtn.hidden;
+  confirmBtn.hidden = !open; resetBtn.setAttribute("aria-expanded", open);
+  if (open) confirmBtn.focus();
+});
+confirmBtn.addEventListener("click", () => {
+  ticks[race] = {}; store.set("skyrun-group-ticks", ticks);
+  closeConfirm(); render(); resetBtn.focus();
+});
 
 function diffFor(diffs, r) {
   if (!diffs) return "";
@@ -281,59 +332,108 @@ function diffFor(diffs, r) {
   return "";
 }
 
-function render() {
-  document.documentElement.style.setProperty("--rc", `var(--race-${race})`);
-  RACES.forEach(r => document.getElementById("race-" + r.id).setAttribute("aria-pressed", r.id === race));
-  const info = RACES.find(r => r.id === race);
-  document.getElementById("start").textContent = info.start;
-  const mine = ticks[race] || (ticks[race] = {});
-  const list = document.getElementById("list");
-  list.innerHTML = "";
-  let total = 0, done = 0;
+// Days until the chosen race starts, counted in Zimbabwe calendar days.
+function countdown(r) {
+  const day = d => Math.floor((d.getTime() + 2 * 3600e3) / 864e5);
+  const left = day(new Date(r.start)) - day(new Date());
+  if (left > 1) return `${left} days to go`;
+  if (left === 1) return "Tomorrow";
+  if (left === 0) return "Race day. Go well!";
+  return "";
+}
 
-  SECTIONS.forEach(sec => {
+function mine() {
+  const t = ticks[race];
+  return t && typeof t === "object" && !Array.isArray(t) ? t : (ticks[race] = {});
+}
+
+// Builds the list for the chosen race. Ticking an item updates it in place (see onTick), so focus and scroll position are kept.
+function render() {
+  const info = RACES.find(r => r.id === race);
+  document.documentElement.style.setProperty("--rc", `var(--race-${race})`);
+  RACES.forEach(r => $("race-" + r.id).setAttribute("aria-pressed", r.id === race));
+  $("bar-name").textContent = `${info.name} · ${info.dist}`;
+  const cd = countdown(info);
+  $("when").innerHTML = `<span><b>Starts</b> ${esc(info.when)} · ${esc(info.where)}</span>` + (cd ? `<span class="soon">${esc(cd)}</span>` : "");
+
+  const done = mine(), list = $("list");
+  list.innerHTML = "";
+  SECTIONS.forEach((sec, si) => {
     const items = sec.items.filter(i => i[3].includes(race));
     if (!items.length) return;
-    const secDone = items.filter(i => mine[i[0]]).length;
-    if (!sec.optional) { total += items.length; done += secDone; }
     const s = document.createElement("section");
-    s.innerHTML = `<div class="sec-head"><h2>${sec.title}</h2><span class="sec-count">${secDone} / ${items.length}</span></div>` +
-      (sec.note ? `<p class="note-sec">${sec.note}</p>` : "");
-    const ul = document.createElement("ul");
-    items.forEach(([key, name, det, who, diffs]) => {
-      const checked = !!mine[key];
-      if (hideDone && checked) return;
-      const diff = diffFor(diffs, race);
-      const li = document.createElement("li");
-      li.innerHTML = `<label class="item${checked ? " done" : ""}" for="k-${key}">
-        <input type="checkbox" id="k-${key}" ${checked ? "checked" : ""}>
-        <span class="txt"><span class="name">${name}</span>${det ? `<span class="det">${det}</span>` : ""}${diff ? `<span class="diff">${diff}</span>` : ""}</span></label>`;
-      li.querySelector("input").addEventListener("change", e => {
-        mine[key] = e.target.checked; store.set("skyrun-group-ticks", ticks); render();
-      });
+    s.dataset.optional = sec.optional ? "1" : "";
+    s.setAttribute("aria-labelledby", "h-s" + si);
+    s.innerHTML = `<div class="sec-head"><h2 id="h-s${si}">${esc(sec.title)}${sec.optional ? '<span class="tag">Optional</span>' : ""}</h2><span class="sec-count"></span></div>` +
+      (sec.note ? `<p class="note">${esc(sec.note)}</p>` : "") + `<ul></ul><p class="all-done" hidden>All packed ✓</p>`;
+    const ul = s.querySelector("ul");
+    items.forEach(([key, name, det, , diffs]) => {
+      const diff = diffFor(diffs, race), li = document.createElement("li");
+      li.innerHTML = `<label class="item" for="k-${key}"><input type="checkbox" id="k-${key}" data-key="${key}">` +
+        `<span class="txt"><span class="name">${esc(name)}</span>${det ? `<span class="det">${esc(det)}</span>` : ""}${diff ? `<span class="diff">${esc(diff)}</span>` : ""}</span></label>`;
+      li.querySelector("input").checked = !!done[key];
       ul.appendChild(li);
     });
-    s.appendChild(ul);
     list.appendChild(s);
   });
-
-  document.getElementById("count").textContent = `${done} / ${total} compulsory packed`;
-  document.getElementById("meter").style.width = total ? (done / total * 100) + "%" : "0";
+  refresh();
 }
+
+// Updates ticks, counts, hidden items and the progress bar without rebuilding the list.
+function refresh() {
+  const done = mine();
+  let total = 0, packed = 0;
+  $("list").querySelectorAll("section").forEach(s => {
+    const boxes = [...s.querySelectorAll("input")];
+    const n = boxes.filter(b => done[b.dataset.key]).length;
+    boxes.forEach(b => {
+      const on = !!done[b.dataset.key];
+      b.closest(".item").classList.toggle("done", on);
+      b.closest("li").hidden = hideDone && on;
+    });
+    const c = s.querySelector(".sec-count");
+    c.textContent = `${n} / ${boxes.length}`;
+    c.classList.toggle("full", n === boxes.length);
+    s.querySelector(".all-done").hidden = !(hideDone && n === boxes.length);
+    if (!s.dataset.optional) { total += boxes.length; packed += n; }
+  });
+  const count = $("count");
+  count.innerHTML = packed === total ? `All ${total} <span class="wide">compulsory </span>packed ✓` : `${packed} / ${total} <span class="wide">compulsory </span>packed`;
+  count.classList.toggle("full", packed === total);
+  $("meter").style.width = total ? (packed / total * 100) + "%" : "0";
+}
+
+$("list").addEventListener("change", e => {
+  const box = e.target;
+  if (!box.matches("input[type=checkbox]")) return;
+  mine()[box.dataset.key] = box.checked;
+  store.set("skyrun-group-ticks", ticks);
+  // If the ticked item is about to be hidden, move focus to the next visible checkbox so keyboard users keep their place.
+  if (hideDone && box.checked) {
+    const all = [...$("list").querySelectorAll("li:not([hidden]) input")];
+    const next = all[all.indexOf(box) + 1] || all[all.indexOf(box) - 1];
+    refresh();
+    if (next && document.activeElement === box) next.focus();
+  } else refresh();
+});
+
 render();
 
-// Copy buttons for the emergency numbers. If the phone blocks copying, the number is selected instead so it can be copied by hand.
-document.querySelectorAll(".btn.copy").forEach(b => {
+// Copy buttons. If the phone blocks copying, the number is selected instead so it can be copied by hand.
+document.querySelectorAll(".copy").forEach(b => {
+  let timer;
+  const show = (text, ok) => {
+    b.textContent = text; b.classList.toggle("ok", ok);
+    clearTimeout(timer); timer = setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1800);
+  };
+  const select = () => {
+    const r = document.createRange(); r.selectNodeContents($(b.dataset.target));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    show("Selected", false);
+  };
   b.addEventListener("click", () => {
-    const reset = () => setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1800);
-    const select = () => {
-      const r = document.createRange(); r.selectNodeContents(document.getElementById(b.dataset.target));
-      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-      b.textContent = "Selected"; reset();
-    };
-    try {
-      navigator.clipboard.writeText(b.dataset.num).then(() => { b.textContent = "Copied"; b.classList.add("ok"); reset(); }, select);
-    } catch (e) { select(); }
+    try { navigator.clipboard.writeText(b.dataset.num).then(() => show("Copied", true), select); }
+    catch (e) { select(); }
   });
 });
 </script>
